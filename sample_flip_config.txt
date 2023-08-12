@@ -21,4 +21,4 @@ fqdn: sub2.app2.invoices.org CNAME
 primary: primary-sub2.app2.invoices.org
 secondary: secondary-sub2.app2.invoices.org
 
-# Sure you can buy invoices.org :) Let's call it a donnation.
+# Sure you can buy invoices.org :) Let's call it a BIG donnation.
