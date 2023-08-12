@@ -1,0 +1,24 @@
+# lines with a hash as the first character are comments and ignored by the code.
+#
+# Robust error check has yet to be implemented
+# -- Records to change should exisit in advance of using flip_app
+#
+[Application1]
+fqdn: app1.invoices.org A
+primary: 192.168.1.1
+secondary: 192.168.2.1
+
+fqdn: sub1.app1.invoices.org CNAME
+primary: primary-sub1.app1.invoices.org
+secondary: secondary-sub1.app1.invoices.org
+
+[Application2]
+fqdn: app2.invoices.org A
+primary: 199.60.123.10
+secondary: 199.60.123.20
+
+fqdn: sub2.app2.invoices.org CNAME
+primary: primary-sub2.app2.invoices.org
+secondary: secondary-sub2.app2.invoices.org
+
+# Sure you can buy invoices.org :) Let's call it a donnation.
