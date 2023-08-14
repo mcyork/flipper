@@ -217,9 +217,7 @@ def flip_record(fqdn, zone, record_type, new_values, action="replace"):
     #          this is the only action currently supported
     if action == "replace":
         # Create a structure for the new answers based on the provided new_values
-        record['answers'] = [{'answer': [value]} for value in new_values]  # Create a list of dicts for each IP
-
-        # new_answers = [{"answer": [value]} for value in new_values]
+        new_answers = [{"answer": [value]} for value in new_values]
 
         # Use the update method to replace the answers
         record.update(answers=new_answers)
