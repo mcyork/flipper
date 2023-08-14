@@ -161,7 +161,8 @@ def main():
                 _, zone, _, _ = matching_records[0]
 
                 # Call the flip_record function with the extracted zone
-                flip_record(fqdn, zone, record_type, [new_value])
+                flip_record(fqdn, zone, record_type, new_value.split(','))
+                # flip_record(fqdn, zone, record_type, [new_value])
                 flips_summary.append(f"{fqdn} {record_type} -> {new_value}")
 
             print("\nFlip operation summary:")
