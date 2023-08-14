@@ -6,7 +6,7 @@
 [Application1]
 fqdn: app1.invoices.org A
 primary: 192.168.1.1
-secondary: 192.168.2.1
+secondary: 192.168.2.1,192.168.2.2
 
 fqdn: sub1.app1.invoices.org CNAME
 primary: primary-sub1.app1.invoices.org
