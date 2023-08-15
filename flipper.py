@@ -106,7 +106,7 @@ def main():
     # Check if the check action is selected. If so, call the search_records function.
     if args.action == "check":
         records = search_records(args.fqdn)
-        print(f"JSON response: {records}\n")
+        # print(f"JSON response: {records}\n")
         matching_records = [record for record in records if record[0] == args.fqdn]
 
         if not matching_records:
