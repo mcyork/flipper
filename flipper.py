@@ -106,6 +106,7 @@ def main():
     # Check if the check action is selected. If so, call the search_records function.
     if args.action == "check":
         records = search_records(args.fqdn)
+        print(f"JSON response: {records}\n")
         matching_records = [record for record in records if record[0] == args.fqdn]
 
         if not matching_records:
@@ -127,11 +128,49 @@ def main():
         flip_config = parse_flip_config(flip_config_file)
 
         # List available application names if the -list option is provided
+        #if args.list:
+            # If the -list option is provided, list the available application names or show the full config if -app is specified
         if args.list:
-            print("Available applications:")
-            for app_name in flip_config.keys():
-                print(f"  {app_name}")
-            return
+            if args.app:
+                app_name = args.app
+                app_config = flip_config.get(app_name, [])
+
+                # Display the primary and secondary values for each FQDN in the specified application
+                print(f"\nConfig for {app_name}:")
+                for record in app_config:
+                    fqdn, _ = record['fqdn']  # Extracting the domain name part of the tuple
+                    print(f"FQDN: {fqdn}")
+                    print(f"Primary: {record['primary']}")
+                    print(f"Secondary: {record['secondary']}")
+
+                    # Call the search_records function and print the matching records
+                    records = search_records(fqdn)
+                    if records is None:
+                        print(f"An error occurred while searching the records for {fqdn}")
+                        continue
+
+                    matching_records = [r for r in records if r[0] == fqdn]
+
+                    if not matching_records:
+                        print(f"No A or CNAME records found for {record['fqdn']}\n")
+                    else:
+                        for domain, zone, record_type, record_values in matching_records:
+                            print(f"-- FQDN: {domain}")
+                            print(f"   Zone: {zone}")
+                            print(f"   Record Type: {record_type}")
+                            print(f"   Record Values: {record_values}\n")
+                return
+            else:
+                # Existing logic to list available application names
+
+                print("Available applications:")
+                for app_name, records in flip_config.items():
+                    print(f"  {app_name}")
+                    for record in records:
+                        fqdn, _ = record['fqdn']
+                        print(f"    FQDN: {fqdn}")
+                return
+
 
         # Check that -app and -site are provided unless -list is specified
         if args.app is None or args.site is None:
@@ -162,7 +201,8 @@ def main():
 
                 # Call the flip_record function with the extracted zone
                 flip_record(fqdn, zone, record_type, new_value.split(','))
-                # flip_record(fqdn, zone, record_type, [new_value])
+
+                #flip_record(fqdn, zone, record_type, [new_value])
                 flips_summary.append(f"{fqdn} {record_type} -> {new_value}")
 
             print("\nFlip operation summary:")
